@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-    "mysql" % "mysql-connector-java" % "5.1.18"
+    "postgresql" % "postgresql" % "9.1-903.jdbc4"
     
   )
 
