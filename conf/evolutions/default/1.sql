@@ -4,20 +4,20 @@
 # --- !Ups
 
 create table terapeuta (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   dni                       varchar(255),
   email                     varchar(255),
   constraint pk_terapeuta primary key (id))
 ;
+
+create sequence terapeuta_seq;
 
 
 
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+drop table if exists terapeuta cascade;
 
-drop table terapeuta;
-
-SET FOREIGN_KEY_CHECKS=1;
+drop sequence if exists terapeuta_seq;
 

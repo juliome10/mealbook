@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-    "postgresql" % "postgresql" % "9.1-903.jdbc4"
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
     
   )
 
