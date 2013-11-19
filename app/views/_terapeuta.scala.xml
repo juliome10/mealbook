@@ -1,0 +1,4 @@
+@(terapeuta: Terapeuta)
+<terapeuta dni="@terapeuta.dni">
+	<email>@terapeuta.email</email>
+</terapeuta>

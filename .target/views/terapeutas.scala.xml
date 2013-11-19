@@ -1,0 +1,6 @@
+@(terapeutas: List[Terapeuta])
+<terapeutas>
+@for(t <- terapeutas) {
+	@_terapeuta(t)
+}
+</terapeutas>
