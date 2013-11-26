@@ -1,0 +1,10 @@
+@(paciente: Paciente)
+<paciente id="@paciente.id">
+	<email>@paciente.email</email>
+	<nombre>@paciente.nombre</nombre>
+	<sexo>@paciente.sexo</sexo>
+	<fecha_reg>@paciente.devuelveFecha("reg")</fecha_reg>
+	<fecha_nac>@paciente.devuelveFecha("nac")</fecha_nac>
+	<altura>@paciente.altura</altura>
+	<medicamentos>@paciente.medicamentos</medicamentos>
+</paciente>

@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Terapeutas.index()
+#GET     /                           controllers.Terapeutas.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -15,3 +15,8 @@ GET     /terapeutas                 controllers.Terapeutas.index()
 GET     /terapeuta/:dni             controllers.Terapeutas.retrieve(dni: String)
 PUT     /terapeuta/:dni             controllers.Terapeutas.update(dni: String)
 DELETE  /terapeuta/:dni             controllers.Terapeutas.delete(dni: String)
+
+# Paciente
+GET     /terapeuta/:dni/pacientes   controllers.Terapeutas.pacientes(dni: String)
+POST    /paciente                   controllers.Pacientes.create()
+GET     /paciente/:email            controllers.Pacientes.retrieve(email: String)

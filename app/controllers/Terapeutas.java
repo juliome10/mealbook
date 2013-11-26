@@ -6,6 +6,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.w3c.dom.Document;
 
+import models.Paciente;
 import models.Terapeuta;
 import play.i18n.Messages;
 import play.libs.Json;
@@ -137,5 +138,10 @@ public class Terapeutas extends Controller{
 		node.put("code", code);
 		node.put("message", Messages.get(message));
 		return node;
+	}
+	
+	public static Result pacientes(String dni) {
+		List<Paciente>lista = null;
+		return ok(views.xml.pacientes.render(lista));
 	}
 }

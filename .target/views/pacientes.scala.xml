@@ -1,0 +1,6 @@
+@(pacientes: List[Paciente])
+<pacientes>
+@for(p <- pacientes) {
+	@_paciente(p)
+}
+</pacientes>

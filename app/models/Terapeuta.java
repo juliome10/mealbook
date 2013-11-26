@@ -1,14 +1,15 @@
 package models;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.ConstraintViolation;
 
 import org.codehaus.jackson.JsonNode;
@@ -44,6 +45,9 @@ public class Terapeuta extends Model{
 	
 	@Required
 	public Long fecha_reg;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="terapeuta")
+	public List<Paciente> pacientes = new ArrayList<Paciente>();
 	
 	public static Finder<Long, Terapeuta> finder = new Finder<Long, Terapeuta>(Long.class, Terapeuta.class);
 
