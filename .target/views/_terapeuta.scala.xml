@@ -1,4 +1,7 @@
 @(terapeuta: Terapeuta)
 <terapeuta dni="@terapeuta.dni">
 	<email>@terapeuta.email</email>
+	<nombre>@terapeuta.nombre</nombre>
+	<apellidos>@terapeuta.apellidos</apellidos>
+	<fecha_reg>@terapeuta.devuelveFecha()</fecha_reg>	
 </terapeuta>
