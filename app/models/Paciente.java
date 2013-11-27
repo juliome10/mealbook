@@ -80,6 +80,9 @@ public class Paciente extends Model{
 			cal.set(Integer.valueOf(valores[2]), Integer.valueOf(valores[1]), Integer.valueOf(valores[0]));
 			this.fecha_nac = cal.getTimeInMillis();
 		}
+		if (input.get("terapeuta_id") != null){
+			this.terapeuta = Terapeuta.finder.byId(input.get("terapeuta_id").asLong());
+		}
 		this.fecha_reg = Calendar.getInstance().getTimeInMillis();
 	}
 	

@@ -141,7 +141,8 @@ public class Terapeutas extends Controller{
 	}
 	
 	public static Result pacientes(String dni) {
-		List<Paciente>lista = null;
+		Terapeuta t = Terapeuta.finder.where().eq("dni", dni).findUnique();
+		List<Paciente>lista = t.pacientes;
 		return ok(views.xml.pacientes.render(lista));
 	}
 }
