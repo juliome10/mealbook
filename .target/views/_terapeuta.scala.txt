@@ -1,0 +1,8 @@
+@(terapeuta: Terapeuta)
+{
+	"email": "@terapeuta.email",	
+	"nombre": "@terapeuta.nombre",
+	"apellidos": "@terapeuta.apellidos",
+	"dni": "@terapeuta.dni", 
+	"fecha_reg": "@terapeuta.devuelveFecha()"
+}

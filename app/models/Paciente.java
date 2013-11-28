@@ -5,9 +5,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.ConstraintViolation;
 
 import org.codehaus.jackson.JsonNode;
@@ -18,7 +20,6 @@ import com.avaje.ebean.validation.Email;
 import play.data.validation.Validation;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 @Entity
 public class Paciente extends Model{
@@ -49,8 +50,11 @@ public class Paciente extends Model{
 	
 	public String medicamentos;
 	
-	@ManyToOne
+	@ManyToOne @Required
 	public Terapeuta terapeuta;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="paciente")
+    public List<Nota> notas = new ArrayList<Nota>();
 	
 	public static Finder<Long, Paciente> finder = new Finder<Long,Paciente>(Long.class, Paciente.class);
 	
@@ -84,6 +88,7 @@ public class Paciente extends Model{
 			this.terapeuta = Terapeuta.finder.byId(input.get("terapeuta_id").asLong());
 		}
 		this.fecha_reg = Calendar.getInstance().getTimeInMillis();
+		this.notas = new ArrayList<Nota>();
 	}
 	
 	public Paciente(Document input) {
@@ -132,5 +137,46 @@ public class Paciente extends Model{
 		return errors;
 	}
 	
+	public boolean changeData(Paciente newData) {
+		boolean changed = false;
+		
+		if (newData.nombre != null) {
+			this.nombre = newData.nombre;
+			changed = true;
+		}
+		if (newData.email != null) {
+			this.email = newData.email;
+			changed = true;
+		}
+		if (newData.password != null) {
+			this.password = newData.password;
+			changed = true;
+		}
+		if (newData.sexo != null) {
+			this.sexo = newData.sexo;
+			changed = true;
+		}
+		if (newData.altura != null) {
+			this.altura = newData.altura;
+			changed = true;
+		}
+		if (newData.medicamentos != null) {
+			this.medicamentos = newData.medicamentos;
+			changed = true;
+		}
+		if (newData.terapeuta != null) {
+			this.terapeuta = newData.terapeuta;
+			changed = true;
+		}
+		if (newData.fecha_nac != null) {
+			this.fecha_nac = newData.fecha_nac;
+			changed = true;
+		}
+		return changed;
+	}
+	
+	public static List<Paciente> findAll() {
+		return finder.findList();
+	}
 	
 }

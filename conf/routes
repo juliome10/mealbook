@@ -8,6 +8,20 @@
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+# Notas
+GET     /paciente/:id/notas         controllers.Pacientes.notas(id: Long)
+POST    /paciente/:id/nota          controllers.Notas.create(id: Long)
+PUT     /nota/:id                   controllers.Notas.update(id: Long)
+DELETE  /nota/:id                   controllers.Notas.delete(id: Long)
+GET     /nota/:id                   controllers.Notas.retrieve(id: Long)
+
+# Paciente
+GET     /terapeuta/:dni/pacientes   controllers.Terapeutas.pacientes(dni: String)
+POST    /:dni/paciente              controllers.Pacientes.create(dni: String)
+GET     /paciente/:id               controllers.Pacientes.retrieve(id: Long)
+PUT     /paciente/:id               controllers.Pacientes.update(id: Long)
+DELETE  /paciente/:id               controllers.Pacientes.delete(id: Long)
+GET     /pacientes                  controllers.Pacientes.index()
 
 # Terapeuta
 POST    /terapeuta                  controllers.Terapeutas.create()
@@ -15,8 +29,3 @@ GET     /terapeutas                 controllers.Terapeutas.index()
 GET     /terapeuta/:dni             controllers.Terapeutas.retrieve(dni: String)
 PUT     /terapeuta/:dni             controllers.Terapeutas.update(dni: String)
 DELETE  /terapeuta/:dni             controllers.Terapeutas.delete(dni: String)
-
-# Paciente
-GET     /terapeuta/:dni/pacientes   controllers.Terapeutas.pacientes(dni: String)
-POST    /paciente                   controllers.Pacientes.create()
-GET     /paciente/:email            controllers.Pacientes.retrieve(email: String)

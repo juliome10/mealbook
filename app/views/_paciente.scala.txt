@@ -1,0 +1,17 @@
+@(paciente: Paciente)
+{
+	"email": "@paciente.email",	
+	"nombre": "@paciente.nombre",
+	"sexo": "@paciente.sexo", 
+	"fecha_reg": "@paciente.devuelveFecha("reg")",
+	"fecha_nac": "@paciente.devuelveFecha("nac")",
+	"altura": "@paciente.altura",
+	"terapeuta": [{
+		"nombre": "@paciente.terapeuta.nombre",
+		"apellidos": "@paciente.terapeuta.apellidos",
+		"email": "@paciente.terapeuta.email"
+	}]
+	@if(paciente.medicamentos != null){
+	,"medicamentos": "@paciente.medicamentos"
+	} 
+}

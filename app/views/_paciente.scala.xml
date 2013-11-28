@@ -6,5 +6,12 @@
 	<fecha_reg>@paciente.devuelveFecha("reg")</fecha_reg>
 	<fecha_nac>@paciente.devuelveFecha("nac")</fecha_nac>
 	<altura>@paciente.altura</altura>
+	@if(paciente.medicamentos != null){
 	<medicamentos>@paciente.medicamentos</medicamentos>
+	}
+	<terapeuta>
+	    <nombre>@paciente.terapeuta.nombre</nombre>
+	    <apellidos>@paciente.terapeuta.apellidos</apellidos>
+	    <email>@paciente.terapeuta.email</email>
+	</terapeuta>
 </paciente>

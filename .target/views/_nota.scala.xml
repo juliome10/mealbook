@@ -1,0 +1,6 @@
+@(nota: Nota)
+<nota id="@nota.id">
+       <pensamiento>@nota.pensamiento</pensamiento>
+       <emocion>@nota.emocion</emocion>
+       <fecha_nota>@nota.devuelveFecha()</fecha_nota>
+</nota>

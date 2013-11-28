@@ -1,0 +1,9 @@
+@(terapeutas: List[Terapeuta])
+[
+@for((t,index) <- terapeutas.zipWithIndex) {
+	@_terapeuta(t)
+	@if(index != (terapeutas.length -1)){
+	,
+	}
+}
+]

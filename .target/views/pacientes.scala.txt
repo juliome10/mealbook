@@ -1,0 +1,9 @@
+@(pacientes: List[Paciente])
+[
+@for((p,index) <- pacientes.zipWithIndex) {
+	@_paciente(p)
+	@if(index != (pacientes.length -1)){
+	,
+	}
+}
+]

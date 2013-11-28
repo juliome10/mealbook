@@ -11,16 +11,15 @@ import models.Terapeuta;
 import play.i18n.Messages;
 import play.libs.Json;
 import play.mvc.*;
-import views.html.index;
 
 public class Terapeutas extends Controller{
 
-	//Enviar JSON?
+	//Acepta JSON?
 	private static boolean acceptsJson() {
 		return request().accepts("application/json");
 	}
 	
-	//Enviar XML?
+	//Acepta XML?
 	private static boolean acceptsXml() {
 		return (request().accepts("application/xml") || request().accepts("text/xml"));
 	}
@@ -35,6 +34,12 @@ public class Terapeutas extends Controller{
 	private static boolean contentIsXml() {
 		String content = request().getHeader("Content-Type"); 
 		return (content.startsWith("application/xml") || content.startsWith("text/xml"));
+	}
+	
+	//Enviar contenido en formato JSON
+	private static Result okWithJsonContent(Content c) {
+		response().setContentType("application/json");
+		return ok(c);
 	}
 	
 	private static Terapeuta getTerapeutaFromBody() {
@@ -60,7 +65,7 @@ public class Terapeutas extends Controller{
 		Terapeuta terapeuta = getTerapeutaFromBody();
 		if (terapeuta == null) {
 			res = badRequest(errorJson(1, "unsupported_format"));
-		}else {
+		}else{
 			List<String> errors = terapeuta.validateAndSave();
 			if (errors.size() == 0) {
 				response().setHeader(LOCATION, routes.Terapeutas.retrieve(terapeuta.dni).absoluteURL(request()));
@@ -77,11 +82,16 @@ public class Terapeutas extends Controller{
 		Result res;
 		
 		Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
-		
 		if (terapeuta == null) {
 			res = notFound();
-		}else {
-			res = ok(views.xml._terapeuta.render(terapeuta));
+		}else{
+			if (acceptsJson()){
+				res = okWithJsonContent(views.txt._terapeuta.render(terapeuta));
+			}else if (acceptsXml()){
+				res = ok(views.xml._terapeuta.render(terapeuta));
+			}else{
+				res = badRequest(errorJson(1, "unsupported_format"));
+			}
 		}
 		
 		return res;
@@ -93,8 +103,7 @@ public class Terapeutas extends Controller{
 		Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
 		if (terapeuta == null) {
 			res = notFound();
-		}
-		else {
+		}else{
 			Terapeuta newTerapeuta = getTerapeutaFromBody();
 			if (newTerapeuta == null) {
 				res = badRequest(errorJson(1, "unsupported_format"));
@@ -119,18 +128,25 @@ public class Terapeutas extends Controller{
 		Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
 		if (terapeuta == null) {
 			res = notFound();
-		}
-		else {
+		}else{
 			terapeuta.delete();
 			res = ok();
 		}
-
 		return res;
 	}
 	
 	public static Result index() {
+		Result res;
 		List<Terapeuta> lista = Terapeuta.findAll();
-		return ok(views.xml.terapeutas.render(lista));
+		if (acceptsJson()){
+			res = okWithJsonContent(views.txt.terapeutas.render(lista));
+		}else if (acceptsXml()){
+			res = ok(views.xml.terapeutas.render(lista));
+		}else{
+			res = badRequest(errorJson(1, "unsupported_format"));
+		}
+		
+		return res;
     }
 	
 	private static JsonNode errorJson(Integer code, String message) {
@@ -141,8 +157,21 @@ public class Terapeutas extends Controller{
 	}
 	
 	public static Result pacientes(String dni) {
-		Terapeuta t = Terapeuta.finder.where().eq("dni", dni).findUnique();
-		List<Paciente>lista = t.pacientes;
-		return ok(views.xml.pacientes.render(lista));
+		Result res = null;
+		Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
+		if (terapeuta == null){
+			res = notFound();
+		}else{
+			List<Paciente>lista = terapeuta.pacientes;
+			if (acceptsJson()){
+				res = okWithJsonContent(views.txt.pacientes.render(lista));
+			}else if (acceptsXml()){
+				res = ok(views.xml.pacientes.render(lista));
+			}else{
+				res = badRequest(errorJson(1, "unsupported_format"));
+			}
+		}
+		
+		return res;
 	}
 }

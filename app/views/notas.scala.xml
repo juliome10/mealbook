@@ -1,0 +1,6 @@
+@(notas: List[Nota])
+<notas>
+@for(n <- notas) {
+       @_nota(n)
+}
+</notas>

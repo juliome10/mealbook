@@ -1,0 +1,9 @@
+@(notas: List[Nota])
+[
+@for((n,index) <- notas.zipWithIndex) {
+	@_nota(n)
+	@if(index != (notas.length -1)){
+	,
+	}
+}
+]

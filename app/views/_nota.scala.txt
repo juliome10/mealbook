@@ -1,0 +1,6 @@
+@(nota: Nota)
+{
+	"pensamiento": "@nota.pensamiento",	
+	"emocion": "@nota.emocion",
+	"fecha_nota": "@nota.devuelveFecha()"
+}
