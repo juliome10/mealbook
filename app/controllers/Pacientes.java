@@ -89,17 +89,23 @@ public class Pacientes extends Controller{
 		if (paciente == null) {
 			res = badRequest(errorJson(1, "unsupported_format"));
 		}else {
-			//Búsqueda del terapeuta por su dni
-			Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
-			//Asignación
-			paciente.terapeuta = terapeuta;
 			
-			List<String> errors = paciente.validateAndSave();
-			if (errors.size() == 0) {
-				response().setHeader(LOCATION, routes.Pacientes.retrieve(paciente.id).absoluteURL(request()));
-				res = ok();
-			}else {
-				res = badRequest();
+			//Si ya existe el email, se prohibe su registro
+			Paciente existePaciente = Paciente.finder.where().eq("email", paciente.email).findUnique();
+			if (existePaciente != null){
+				res = forbidden("Error.. Ya se ha registrado el email");
+			}else{
+				//Búsqueda del terapeuta por su dni
+				Terapeuta terapeuta = Terapeuta.finder.where().eq("dni", dni).findUnique();
+				//Asignación
+				paciente.terapeuta = terapeuta;
+				List<String> errors = paciente.validateAndSave();
+				if (errors.size() == 0) {
+					response().setHeader(LOCATION, routes.Pacientes.retrieve(paciente.id).absoluteURL(request()));
+					res = ok();
+				}else {
+					res = badRequest();
+				}
 			}
 		}
 		

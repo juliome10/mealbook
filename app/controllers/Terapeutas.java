@@ -52,8 +52,7 @@ public class Terapeutas extends Controller{
 		else if (contentIsXml()) {
 			Document input = request().body().asXml();
 			terapeuta = new Terapeuta(input);
-		}
-		else {
+		}else {
 			terapeuta = null;
 		}
 		
@@ -62,16 +61,27 @@ public class Terapeutas extends Controller{
 	
 	public static Result create() {
 		Result res = ok();
+		//Creación del paciente con los datos recibidos del body
 		Terapeuta terapeuta = getTerapeutaFromBody();
+		//Error de formato
 		if (terapeuta == null) {
-			res = badRequest(errorJson(1, "unsupported_format"));
+				res = badRequest(errorJson(1, "unsupported_format"));
 		}else{
-			List<String> errors = terapeuta.validateAndSave();
-			if (errors.size() == 0) {
-				response().setHeader(LOCATION, routes.Terapeutas.retrieve(terapeuta.dni).absoluteURL(request()));
-				res = ok();
-			}else {
-				res = badRequest();
+			//Si ya existe el dni, se prohibe su registro
+			Terapeuta existeTerapeutaDni = Terapeuta.finder.where().eq("dni", terapeuta.dni).findUnique();
+			Terapeuta existeTerapeutaEmail = Terapeuta.finder.where().eq("email", terapeuta.email).findUnique();
+			if (existeTerapeutaDni != null){
+				res = forbidden("Error.. Ya se ha registrado el dni");
+			}else if(existeTerapeutaEmail != null){
+				res = forbidden("Error.. Ya se ha registrado el email");
+			}else{
+				List<String> errors = terapeuta.validateAndSave();
+				if (errors.size() == 0) {
+					response().setHeader(LOCATION, routes.Terapeutas.retrieve(terapeuta.dni).absoluteURL(request()));
+					res = ok();
+				}else {
+					res = badRequest();
+				}
 			}
 		}
 		

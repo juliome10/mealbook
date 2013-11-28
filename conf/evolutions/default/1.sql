@@ -23,6 +23,7 @@ create table paciente (
   altura                    float,
   medicamentos              varchar(255),
   terapeuta_id              bigint,
+  constraint uq_paciente_email unique (email),
   constraint pk_paciente primary key (id))
 ;
 
@@ -35,6 +36,7 @@ create table terapeuta (
   apellidos                 varchar(255),
   fecha_reg                 bigint,
   constraint uq_terapeuta_dni unique (dni),
+  constraint uq_terapeuta_email unique (email),
   constraint pk_terapeuta primary key (id))
 ;
 

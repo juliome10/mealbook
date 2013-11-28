@@ -3,5 +3,6 @@
 	<email>@terapeuta.email</email>
 	<nombre>@terapeuta.nombre</nombre>
 	<apellidos>@terapeuta.apellidos</apellidos>
+	<dni>@terapeuta.dni</dni>
 	<fecha_reg>@terapeuta.devuelveFecha()</fecha_reg>	
 </terapeuta>

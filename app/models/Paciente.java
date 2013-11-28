@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -27,7 +28,7 @@ public class Paciente extends Model{
 	@Id
 	public Long id;
 	
-	@Required @Email
+	@Required @Email @Column(unique=true)
 	public String email;
 	
 	@Required
@@ -93,7 +94,35 @@ public class Paciente extends Model{
 	
 	public Paciente(Document input) {
 		super();
-		this.nombre = input.getElementsByTagName("nombre").item(0).getTextContent();
+		if (input.getElementsByTagName("nombre").item(0).getTextContent() != null){
+			this.nombre = input.getElementsByTagName("nombre").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("password").item(0).getTextContent() != null){
+			this.password = input.getElementsByTagName("password").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("email").item(0).getTextContent() != null){
+			this.email = input.getElementsByTagName("email").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("sexo").item(0).getTextContent() != null){
+			this.sexo = input.getElementsByTagName("sexo").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("altura").item(0).getTextContent() != null){
+			this.altura = Double.valueOf(input.getElementsByTagName("altura").item(0).getTextContent());
+		}
+		if (input.getElementsByTagName("medicamentos").item(0).getTextContent() != null){
+			this.medicamentos = input.getElementsByTagName("medicamentos").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("terapeuta_id").item(0).getTextContent() != null){
+			this.terapeuta = Terapeuta.finder.byId(Long.valueOf(input.getElementsByTagName("terapeuta_id").item(0).getTextContent()));
+		}
+		if (input.getElementsByTagName("fecha_nac").item(0).getTextContent() != null){
+			String[] valores = input.getElementsByTagName("fecha_nac").item(0).getTextContent().split("-");
+			Calendar cal = Calendar.getInstance();
+			cal.set(Integer.valueOf(valores[2]), Integer.valueOf(valores[1]), Integer.valueOf(valores[0]));
+			this.fecha_nac = cal.getTimeInMillis();
+		}
+		this.fecha_reg = Calendar.getInstance().getTimeInMillis();
+		this.notas = new ArrayList<Nota>();
 	}
 	
 	public String devuelveFecha(String f){

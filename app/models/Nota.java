@@ -16,7 +16,6 @@ import org.w3c.dom.Document;
 import play.data.validation.Validation;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 @Entity
 public class Nota extends Model {
@@ -40,21 +39,24 @@ public class Nota extends Model {
 
     public Nota(JsonNode input){
         super();
-        if (input.get("pensamiento") != null)
-        {
-                this.pensamiento = input.get("pensamiento").asText();
+        if (input.get("pensamiento") != null){
+            this.pensamiento = input.get("pensamiento").asText();
         }
-        
-        if (input.get("emocion") != null)
-        {
-                this.emocion = input.get("emocion").asText();
+        if (input.get("emocion") != null){
+            this.emocion = input.get("emocion").asText();
         }                
         this.fecha_nota = Calendar.getInstance().getTimeInMillis();
-
     }
 
 	public Nota(Document input) {
-	        super();
+        super();
+		if (input.getElementsByTagName("pensamiento").item(0).getTextContent() != null){
+			this.pensamiento = input.getElementsByTagName("pensamiento").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("emocion").item(0).getTextContent() != null){
+			this.pensamiento = input.getElementsByTagName("emocion").item(0).getTextContent();
+		}
+        this.fecha_nota = Calendar.getInstance().getTimeInMillis();
 	}
 	
 	public String devuelveFecha(){

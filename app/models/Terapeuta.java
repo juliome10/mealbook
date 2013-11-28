@@ -31,7 +31,7 @@ public class Terapeuta extends Model{
 	@Column(unique=true)
 	public String dni;
 	
-	@Required @Email
+	@Required @Email @Column(unique=true)
 	public String email;
 	
 	@Required
@@ -79,7 +79,22 @@ public class Terapeuta extends Model{
 	
 	public Terapeuta(Document input) {
 		super();
-		this.nombre = input.getElementsByTagName("nombre").item(0).getTextContent();
+		if (input.getElementsByTagName("nombre").item(0).getTextContent() != null){
+			this.nombre = input.getElementsByTagName("nombre").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("apellidos").item(0).getTextContent() != null){
+			this.apellidos = input.getElementsByTagName("apellidos").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("password").item(0).getTextContent() != null){
+			this.password = input.getElementsByTagName("password").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("email").item(0).getTextContent() != null){
+			this.email = input.getElementsByTagName("email").item(0).getTextContent();
+		}
+		if (input.getElementsByTagName("dni").item(0).getTextContent() != null){
+			this.dni = input.getElementsByTagName("dni").item(0).getTextContent();
+		}
+		this.fecha_reg = Calendar.getInstance().getTimeInMillis();
 	}
 	
 	public static List<Terapeuta> findAll() {
