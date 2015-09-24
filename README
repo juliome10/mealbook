@@ -1,4 +1,9 @@
-This is your new Play 2.1 application
-=====================================
+==MEALBOOK
 
-This file will be packaged with your application, when using `play dist`.
+La modalidad terapéutica con más evidencia empírica para el tratamiento de los problemas de alimentación es la cognitivo -
+conductual, y los autorregistros de lápiz y papel son una herramienta necesaria para llevar a cabo la evaluación e
+intervención psicológica.
+El proyecto consiste en una aplicación para terminales móviles, tablets y otros dispositivos portátiles, que funcione como un
+instrumento clínico de monitorización del tratamiento psicológico en los trastornos de la conducta alimentaria. Además,
+gracias a esta aplicación los pacientes podrán tener recordatorios y alarmas, así como mayor facilidad y accesibilidad a la
+hora de registrar la conducta. 
